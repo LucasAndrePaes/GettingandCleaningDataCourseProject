@@ -1,0 +1,47 @@
+	The run_analysis.R script works according to the following steps:
+    
+	1. Loads the dplyr library.
+    
+	2. Checks if "getdata_projectfiles_UCI HAR Dataset.zip" exists. If it does not exist, search for the file at the link "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" and unzip it by extracting the "UCI HAR Dataset" folder.
+
+	3. Creates variables that contain records in the dataset to the following specifications according to "http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones":
+		- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+		- Triaxial Angular velocity from the gyroscope.
+		- A 561-feature vector with time and frequency domain variables.
+		- Its activity label.
+		- An identifier of the subject who carried out the experiment.         
+
+		The feat, xTrain, xTest, act, subjecTest, subjecTrain, yTrain, yTest variables store values based on some contexts such as:
+		
+		feat: The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ.
+		xTrain: Recorded features train data.
+	        xTest: Recorded features test data.
+	        act: List of activities performed when the corresponding measurements were taken and its codes.
+	        subjectTest: Test data of 9/30 volunteer test subjects being observed.
+		subjectTrain: Train data of 21/30 volunteer subjects being observed.
+	        yTrain: Train data of activities’code labels.
+		yTest: Test data of activities’code labels.
+	        
+	4. Merges the training and the test sets to create one data set.
+	        The variable merged is created by merging cbind() function in the composition of rbind() functions with yTrain and yTest, xTrain and xTest, and subjecTrain and subjecTest.
+
+	5. Extracts only the measurements on the mean and standard deviation for each measurement. 
+	        The variable tidy is created by subsetting selected column subject, code and the measurements on the mean and standard deviation for each measurement in merged.
+
+	6. Uses descriptive activity names to name the activities in the data set.
+        	Entire numbers in code column of the tidy replaced with corresponding activity taken from second column of the activities variable
+
+    	7. Appropriately labels the data set with descriptive variable names. 
+		All start with character f in column’s name replaced by Frequency
+        	All start with character t in column’s name replaced by Time
+		All angle in column’s name replaced by Angle
+        	All gravity in column’s name replaced by Gravity
+        	All Acc in column’s name replaced by Accelerometer
+        	All Gyro in column’s name replaced by Gyroscope
+        	All Mag in column’s name replaced by Magnitude
+        	All tBody in column’s name replaced by TimeBody
+		The execution of functions mean and std are replaced by Mean and StandarDeviation.
+        
+    	8.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+        	The variable data is created by sumarizing tidy taking the means of each variable for each activity and each subject, after groupped by subject and activity.
+        	The file data.txt is created of variable data.
